@@ -18,16 +18,17 @@ public class Enemy1 : MonoBehaviour {
 
 	//他のオブジェクトとの当たり判定
 	void OnTriggerEnter( Collider other) {
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
 		if(other.tag == "Bullet"){
-//			enemyHp = enemyHp - s.attackPower;			//Bulletスクリプトの攻撃力をHPから引く
-//			if(enemyHp <= 0){
+			enemyHp = enemyHp - gc.attackPower;		//攻撃力をHPから引く
+			//死亡判定
+			if(enemyHp <= 0){
 				//スコア加算
-				//gcって仮の変数にGameControllerのコンポーネントを入れる
-				GameController gc = gameController.GetComponent<GameController>();
 				gc.total_Score += enemy_score;
-				Debug.Log("score:" + gc.total_Score);
+//				Debug.Log("score:" + gc.total_Score);
 				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
-//			}
+			}
 		}
 	}
 }
