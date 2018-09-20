@@ -9,6 +9,8 @@ public class EnemySpawn : MonoBehaviour {
 	private float timeElapsed;			//時間を仮に格納する変数
 	private int enemyType;				//enemyの種類
 	public GameObject enemy;
+	private float x_pos;				//出現位置
+	private float z_pos;				//出現位置
 
 	void Start () {
 //		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -26,14 +28,36 @@ public class EnemySpawn : MonoBehaviour {
 	
 	public void EnemyGo(){
 		enemyType = 0;	//仮
-//		float x_pos = Random.Range(-3.5f,3.5f); //ランダムで出現位置を決める
+		int spawnPos = Random.Range(0,4);		//ランダムで出現サイドを決める
+		//出現位置
+		switch(spawnPos){
+			case 0:
+				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
+				z_pos = 8.0f;
+				Debug.Log("上");
+				break;
+			case 1:
+				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
+				z_pos = -8.0f;
+				Debug.Log("下");
+				break;
+			case 2:
+				x_pos = 4.0f;
+				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				Debug.Log("右");
+				break;
+			case 3:
+				x_pos = -4.0f;
+				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				Debug.Log("左");
+				break;
+		}
 		//okasiを生成する
 		enemy = (GameObject)Instantiate(
 			enemyObject[enemyType],						//■仮で0を入れている。0～4を想定
-			new Vector3(transform.position.x, transform.position.y, transform.position.z),
+			new Vector3(x_pos, transform.position.y, z_pos),
 			transform.rotation
 		);
-		Debug.Log("enemy1 go");
 		timeElapsed = 0.0f;			//生成時間リセット
 	}
 }
