@@ -34,22 +34,22 @@ public class EnemySpawn : MonoBehaviour {
 			case 0:
 				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
 				z_pos = 8.0f;
-				Debug.Log("上");
+//				Debug.Log("上");
 				break;
 			case 1:
 				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
 				z_pos = -8.0f;
-				Debug.Log("下");
+//				Debug.Log("下");
 				break;
 			case 2:
 				x_pos = 4.0f;
 				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
-				Debug.Log("右");
+//				Debug.Log("右");
 				break;
 			case 3:
 				x_pos = -4.0f;
 				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
-				Debug.Log("左");
+//				Debug.Log("左");
 				break;
 		}
 		//okasiを生成する
