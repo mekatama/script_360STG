@@ -47,9 +47,10 @@ public class Enemy1 : MonoBehaviour {
 			enemyHp = enemyHp - gc.attackPower;	//攻撃力をHPから引く
 			isHitStop = true;					//on
 			//死亡判定
-			if(enemyHp <= 0){
+			if(enemyHp == 0){
 				//スコア加算
 				gc.total_Score += enemy_score;
+				gc.killEnemyNum += 1;	//enemy撃破数
 				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 				//アイテムを落とす
 				Instantiate (item1, transform.position, transform.rotation);
