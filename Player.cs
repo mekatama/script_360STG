@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+	GameObject gameController;			//検索したオブジェクト入れる用
 	private float rayRange = 1000f;			//レイを飛ばす距離
 	private Vector3 targetPosition;			//移動する位置
 
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour {
 	private float timeElapsed = 0.0f;				//弾の連射間隔カウント用
 
 	void Start () {
+		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
 		targetPosition = transform.position;	//playerの位置
 	}
 	
@@ -37,6 +39,17 @@ public class Player : MonoBehaviour {
 			//弾を生成する
 			Instantiate( bulletObject, vecBulletPos, transform.rotation);
 			timeElapsed = 0.0f;
+		}
+	}
+
+	//他のオブジェクトとの当たり判定
+	void OnTriggerEnter( Collider other) {
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
+		if(other.tag == "Enemy"){
+			if(!gc.isMuteki){
+				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
+			}
 		}
 	}
  }
