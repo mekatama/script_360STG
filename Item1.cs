@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Item1 : MonoBehaviour {
+	GameObject gameController;			//検索したオブジェクト入れる用
 	public float itemMoveSpeed = 5.0f;	//1秒間にenemyが進む距離
 	private Vector3 vecAddPos;
 	GameObject targetPos;
@@ -11,6 +12,7 @@ public class Item1 : MonoBehaviour {
 	private float timeElapsed = 0.0f;	//Stopカウント用
 
 	void Start () {
+		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
 		targetPos = GameObject.FindWithTag ("Target");	//
 		isStop = true;
 	}
@@ -31,6 +33,16 @@ public class Item1 : MonoBehaviour {
 				timeElapsed = 0.0f;
 				isStop = false;
 			}
+		}
+	}
+
+	//他のオブジェクトとの当たり判定
+	void OnTriggerEnter( Collider other) {
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
+		if(other.tag == "Player"){
+			gc.total_ItemNum += 1;	//個数加算
+			Destroy( gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 		}
 	}
 }
