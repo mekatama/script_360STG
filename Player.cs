@@ -48,6 +48,7 @@ public class Player : MonoBehaviour {
 		GameController gc = gameController.GetComponent<GameController>();
 		if(other.tag == "Enemy"){
 			if(!gc.isMuteki){
+				gc.isGameOver = true;
 				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 			}
 		}
