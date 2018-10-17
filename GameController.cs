@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 	public int killEnemyNum;	//撃墜enemy数
 	public bool isMuteki;		//無敵flag
 	public bool isGameOver;		//無敵flag
+	public int enemyType;		//enemyの種類数
 
 	//ゲームステート
 	enum State{
@@ -29,12 +30,12 @@ public class GameController : MonoBehaviour {
 		//ステートの制御
 		switch(state){
 			case State.GameStart:
-				Debug.Log("game start");
+//				Debug.Log("game start");
 				Play();		//ステート移動		
 				break;
 			//
 			case State.Play:
-				Debug.Log("play");
+//				Debug.Log("play");
 				//GameOver判定
 				if(isGameOver){
 					GameOver();
