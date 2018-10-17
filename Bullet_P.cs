@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet_P : MonoBehaviour {
 	public float bulletMoveSpeed = 10.0f;	//1秒間に弾が進む距離
-	public int attackPower = 1;				//弾の攻撃力
+//	public int attackPower = 1;				//弾の攻撃力
 
 	void Start () {
 		
