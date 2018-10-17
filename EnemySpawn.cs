@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour {
-//	GameObject gameController;			//検索したオブジェクト入れる用
+	GameObject gameController;			//検索したオブジェクト入れる用
 	public GameObject[] enemyObject;	//enemyのプレハブを配列で管理
 	public float timeOut;				//enemyを出現させたい時間間隔
 	private float timeElapsed;			//時間を仮に格納する変数
@@ -13,7 +13,7 @@ public class EnemySpawn : MonoBehaviour {
 	private float z_pos;				//出現位置
 
 	void Start () {
-//		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
+		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
 		enemyType = 0;							//(仮)okasiの種類
 		enemy = null;
 	}
@@ -27,7 +27,10 @@ public class EnemySpawn : MonoBehaviour {
 	}
 	
 	public void EnemyGo(){
-		enemyType = 0;	//仮
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
+		enemyType = Random.Range(0, gc.enemyType);	//okasiの種類。gamecontrollで制御
+//		enemyType = 0;	//仮
 		int spawnPos = Random.Range(0,4);		//ランダムで出現サイドを決める
 		//出現位置
 		switch(spawnPos){
