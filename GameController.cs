@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	public bool isMuteki;		//無敵flag
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
+	public int shotLevel;		//shotのレベル
 
 	//ゲームステート
 	enum State{
