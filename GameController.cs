@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
 	public int shotLevel;		//shotのレベル
+	public float editEnemySpawn;//spawn時間変更制御用数値
 
 	//ゲームステート
 	enum State{
@@ -58,7 +59,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update () {
-//		Debug.Log("kill数" + killEnemyNum);
+		//撃破数でenemyの種類を制御。しきい値は後で制御
+		if(killEnemyNum < 10){
+			enemyType = 0;
+		}else{
+			enemyType = Random.Range(0,2);
+		}
 	}
 
 	void GameStart(){

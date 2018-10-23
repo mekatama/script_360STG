@@ -11,6 +11,7 @@ public class EnemySpawn : MonoBehaviour {
 	public GameObject enemy;
 	private float x_pos;				//出現位置
 	private float z_pos;				//出現位置
+	private bool isSpawnTime;			//spawn時間変更制御用flag
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -19,6 +20,21 @@ public class EnemySpawn : MonoBehaviour {
 	}
 
 	void Update () {
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
+		//15体撃破数毎にスポーン時間を短くする
+		if((gc.killEnemyNum % 15) == 0){
+			if(isSpawnTime == false){
+				if(timeOut > 0.1f){
+					Debug.Log("enemy fueru");
+					timeOut -= gc.editEnemySpawn;
+					isSpawnTime = true;
+				}
+			}
+		}else{
+			isSpawnTime = false;
+		}
+
 		//時間チェック
 		timeElapsed += Time.deltaTime;	//経過時間の保存
         if(timeElapsed >= timeOut) {	//指定した経過時間に達したら
@@ -29,8 +45,7 @@ public class EnemySpawn : MonoBehaviour {
 	public void EnemyGo(){
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
-		enemyType = Random.Range(0, gc.enemyType);	//okasiの種類。gamecontrollで制御
-//		enemyType = 0;	//仮
+		enemyType = gc.enemyType;				//GameControllerで決定した値を使用
 		int spawnPos = Random.Range(0,4);		//ランダムで出現サイドを決める
 		//出現位置
 		switch(spawnPos){
@@ -55,7 +70,7 @@ public class EnemySpawn : MonoBehaviour {
 //				Debug.Log("左");
 				break;
 		}
-		//okasiを生成する
+		//enemyを生成する
 		enemy = (GameObject)Instantiate(
 			enemyObject[enemyType],						//■仮で0を入れている。0～4を想定
 			new Vector3(x_pos, transform.position.y, z_pos),
