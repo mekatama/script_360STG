@@ -41,14 +41,14 @@ public class Enemy1 : MonoBehaviour {
 
 	//他のオブジェクトとの当たり判定
 	void OnTriggerEnter( Collider other) {
-		Debug.Log("hit!!");
+//		Debug.Log("hit!!");
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
 		if(other.tag == "Bullet"){
 			if(enemyHp > 0){
 				enemyHp = enemyHp - gc.attackPower;	//攻撃力をHPから引く
 				isHitStop = true;					//on
-				Debug.Log("enemy_hp : " + enemyHp);
+//				Debug.Log("enemy_hp : " + enemyHp);
 //				Destroy(other.gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 			}
 			//死亡判定
