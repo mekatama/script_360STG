@@ -6,13 +6,18 @@ public class GameController : MonoBehaviour {
 	public int total_Score;		//score
 	public int attackPower;		//攻撃力
 	public int total_ItemNum;	//item数
+	public int spawnEnemyNum;	//出現enemy数
 	public int killEnemyNum;	//撃墜enemy数
+	public int killBossNum;		//撃墜boss数
 	public bool isMuteki;		//無敵flag
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
 	public int shotLevel;		//shotのレベル
 	public float editEnemySpawn;//spawn時間変更制御用数値
-
+	public bool isBossGo;		//boss出現flag
+	public int bossType;		//bossの種類数
+	private bool isBossOnce;	//一回だけ処理
+	
 	//ゲームステート
 	enum State{
 		GameStart,	//
@@ -25,6 +30,7 @@ public class GameController : MonoBehaviour {
 
 	void Start () {
 		isGameOver = false;	//初期化
+		isBossOnce = false;	//初期化
 		GameStart();		//初期ステート		
 	}
 
@@ -59,10 +65,16 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update () {
-		//撃破数でenemyの種類を制御。しきい値は後で制御
-		if(killEnemyNum < 10){
-			enemyType = 0;
+		//spawn数でbossの出現と種類を制御。しきい値は後で制御
+		if(spawnEnemyNum == 6 || spawnEnemyNum == 12){
+			//ココに一回だけ処理
+			if(!isBossOnce){
+				isBossGo = true;	//bosss出現。撃破でoff
+				bossType = Random.Range(0,1);
+				isBossOnce = true;
+			}
 		}else{
+			isBossOnce = false;
 			enemyType = Random.Range(0,2);
 		}
 	}
