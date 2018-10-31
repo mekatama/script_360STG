@@ -13,11 +13,13 @@ public class Enemy1 : MonoBehaviour {
 	private bool isHitStop;
 	public float hitStoptime = 0.2f;	//HitStop間隔
 	private float timeElapsed = 0.0f;	//HitStopカウント用
+	private bool isDeth;				//死亡flag
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
 		targetPos = GameObject.FindWithTag ("Target");				//
 		isHitStop = false;
+		isDeth = false;
 	}
 	
 	void Update () {
@@ -41,24 +43,28 @@ public class Enemy1 : MonoBehaviour {
 
 	//他のオブジェクトとの当たり判定
 	void OnTriggerEnter( Collider other) {
-//		Debug.Log("hit!!");
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
-		if(other.tag == "Bullet"){
+		if(other.tag == "Bullet1" || other.tag == "Bullet2" || other.tag == "Bullet3"){
 			if(enemyHp > 0){
 				enemyHp = enemyHp - gc.attackPower;	//攻撃力をHPから引く
+				if(enemyHp <= 0){
+					enemyHp = 0;
+				}
 				isHitStop = true;					//on
-//				Debug.Log("enemy_hp : " + enemyHp);
-//				Destroy(other.gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 			}
 			//死亡判定
-			if(enemyHp <= 0){
-				//スコア加算
-				gc.total_Score += enemy_score;
-				gc.killEnemyNum += 1;	//enemy撃破数
-				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
-				//アイテムを落とす
-				Instantiate (item1, transform.position, transform.rotation);
+			if(enemyHp == 0){
+				if(isDeth == false){
+					//スコア加算
+					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
+					gc.total_Score += enemy_score;
+					gc.killEnemyNum ++;	//enemy撃破数
+	//				Debug.Log("killNum : " + gc.killEnemyNum + "spawnNum : " + gc.spawnEnemyNum);
+					//アイテムを落とす
+					Instantiate (item1, transform.position, transform.rotation);
+					isDeth = true;
+				}
 			}
 		}
 	}
