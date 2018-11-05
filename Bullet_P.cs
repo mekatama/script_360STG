@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet_P : MonoBehaviour {
 	public float bulletMoveSpeed = 10.0f;	//1秒間に弾が進む距離
-//	public int attackPower = 1;				//弾の攻撃力
+	public GameObject explosion;			//爆発プレハブを入れる用
 
 	void Start () {
 		
@@ -24,6 +24,8 @@ public class Bullet_P : MonoBehaviour {
 		}
 		if(other.tag == "Enemy"){
 			Destroy( gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
+			Instantiate (explosion, transform.position, transform.rotation);
+
 		}
 	}
 }
