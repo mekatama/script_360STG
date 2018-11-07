@@ -14,6 +14,7 @@ public class Enemy1 : MonoBehaviour {
 	public float hitStoptime = 0.2f;	//HitStop間隔
 	private float timeElapsed = 0.0f;	//HitStopカウント用
 	private bool isDeth;				//死亡flag
+	public GameObject particle;			//爆発Particle
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -60,7 +61,8 @@ public class Enemy1 : MonoBehaviour {
 					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 					gc.total_Score += enemy_score;
 					gc.killEnemyNum ++;	//enemy撃破数
-	//				Debug.Log("killNum : " + gc.killEnemyNum + "spawnNum : " + gc.spawnEnemyNum);
+					//爆発effect
+					Instantiate (particle, transform.position, transform.rotation);
 					//アイテムを落とす
 					Instantiate (item1, transform.position, transform.rotation);
 					isDeth = true;

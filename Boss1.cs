@@ -14,6 +14,7 @@ public class Boss1 : MonoBehaviour {
 	public float hitStoptime = 0.2f;	//HitStop間隔
 	private float timeElapsed = 0.0f;	//HitStopカウント用
 	private bool isDeth;				//死亡flag
+	public GameObject particle;			//爆発Particle
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -58,6 +59,8 @@ public class Boss1 : MonoBehaviour {
 					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 					gc.total_Score += boss_score;
 					gc.killBossNum += 1;	//enemy撃破数
+					//爆発effect
+					Instantiate (particle, transform.position, transform.rotation);
 					//アイテムを落とす
 					Instantiate (item1, transform.position, transform.rotation);
 					isDeth = true;
