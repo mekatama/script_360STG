@@ -15,6 +15,10 @@ public class Boss1 : MonoBehaviour {
 	private float timeElapsed = 0.0f;	//HitStopカウント用
 	private bool isDeth;				//死亡flag
 	public GameObject particle;			//爆発Particle
+	private float x_pos;				//point出現位置random
+	private float z_pos;				//point出現位置random
+	private float tmpPos;				//random値
+	public int spawnCoin;				//coin出現数
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -62,7 +66,14 @@ public class Boss1 : MonoBehaviour {
 					//爆発effect
 					Instantiate (particle, transform.position, transform.rotation);
 					//アイテムを落とす
-					Instantiate (item1, transform.position, transform.rotation);
+					for(int i = spawnCoin; i > 0; --i){
+						tmpPos = 1.0f;
+						x_pos = Random.Range(-tmpPos,tmpPos); //ランダムで出現位置を決める
+						z_pos = Random.Range(-tmpPos,tmpPos); //ランダムで出現位置を決める
+						Instantiate (	item1, 
+										new Vector3(transform.position.x + x_pos, transform.position.y, transform.position.z + z_pos),
+										transform.rotation);
+					}
 					isDeth = true;
 				}
 			}
