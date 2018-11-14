@@ -20,6 +20,11 @@ public class Boss1 : MonoBehaviour {
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
 
+	public GameObject bulletObject = null;			//boss弾プレハブ
+//	public Transform bulletStartPosition = null;	//boss弾の発射位置を取得する
+	public float timeOut = 0.4f;					//boss弾の連射間隔
+	private float timeElapsedAttack = 0.0f;			//boss弾の連射間隔カウント用
+
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
 		targetPos = GameObject.FindWithTag ("Target");				//
@@ -43,6 +48,31 @@ public class Boss1 : MonoBehaviour {
 				timeElapsed = 0.0f;
 				isHitStop = false;
 			}
+		}
+
+		BossShot();
+
+	}
+
+	//Boss攻撃
+	void BossShot(){
+		//boss弾の自動連射
+		timeElapsedAttack += Time.deltaTime;
+        if(timeElapsedAttack >= timeOut) {
+			//弾を生成する位置を指定する
+			float radius =8.0f;
+//			float angle = 90.0f; 
+			float angle = Random.Range(0.0f,359.0f); //ランダムで角度を決める
+
+			float x = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+			float z = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+
+			//弾を生成する位置を指定する
+			Vector3 vecBulletPos	= new Vector3 (x, 0.6f, z);
+			//弾を生成する
+			Instantiate( bulletObject, vecBulletPos, transform.rotation);
+			timeElapsedAttack = 0.0f;
+			Debug.Log("boss attack");
 		}
 	}
 
