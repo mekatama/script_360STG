@@ -20,10 +20,12 @@ public class Boss1 : MonoBehaviour {
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
 
-	public GameObject bulletObject = null;			//boss弾プレハブ
-//	public Transform bulletStartPosition = null;	//boss弾の発射位置を取得する
-	public float timeOut = 0.4f;					//boss弾の連射間隔
-	private float timeElapsedAttack = 0.0f;			//boss弾の連射間隔カウント用
+	public GameObject bulletObject = null;	//boss弾プレハブ
+	public float timeOut = 0.4f;			//boss弾の連射間隔
+	private float timeElapsedAttack = 0.0f;	//boss弾の連射間隔カウント用
+	public int bossAttackType;				//boss攻撃パターン
+	private float radius;					//boss攻撃半径
+	private float angle; 					//boss攻撃角度
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -49,9 +51,7 @@ public class Boss1 : MonoBehaviour {
 				isHitStop = false;
 			}
 		}
-
 		BossShot();
-
 	}
 
 	//Boss攻撃
@@ -59,20 +59,38 @@ public class Boss1 : MonoBehaviour {
 		//boss弾の自動連射
 		timeElapsedAttack += Time.deltaTime;
         if(timeElapsedAttack >= timeOut) {
-			//弾を生成する位置を指定する
-			float radius =8.0f;
-//			float angle = 90.0f; 
-			float angle = Random.Range(0.0f,359.0f); //ランダムで角度を決める
-
+			switch(bossAttackType){
+				//弾を生成する位置をbossAttackTypeで変化させる
+				case 0:
+					//固定方向type
+					radius =8.0f;
+					angle = 90.0f; 
+					break;
+				case 1:
+					//全方位ランダムtype
+					radius =9.0f;
+					angle = Random.Range(0.0f,359.0f); //ランダムで角度を決める
+					break;
+				case 2:
+					//順番方位type
+					radius =9.0f;
+					angle += 10.0f;
+					if(angle >= 360.0f){
+						angle = 0.0f;
+					}
+					break;
+				case 3:
+					break;
+			}
+			//円周上の座標
 			float x = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
 			float z = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-
 			//弾を生成する位置を指定する
 			Vector3 vecBulletPos	= new Vector3 (x, 0.6f, z);
 			//弾を生成する
 			Instantiate( bulletObject, vecBulletPos, transform.rotation);
 			timeElapsedAttack = 0.0f;
-			Debug.Log("boss attack");
+//			Debug.Log("boss attack");
 		}
 	}
 
@@ -94,7 +112,14 @@ public class Boss1 : MonoBehaviour {
 					gc.total_Score += boss_score;
 					gc.killBossNum += 1;	//enemy撃破数
 					//爆発effect
-					Instantiate (particle, transform.position, transform.rotation);
+					for(int i = 5; i > 0; --i){
+						tmpPos = 2.0f;
+						x_pos = Random.Range(-tmpPos,tmpPos); //ランダムで出現位置を決める
+						z_pos = Random.Range(-tmpPos,tmpPos); //ランダムで出現位置を決める
+						Instantiate (	particle, 
+										new Vector3(transform.position.x + x_pos, transform.position.y, transform.position.z + z_pos),
+										transform.rotation);
+					}
 					//アイテムを落とす
 					for(int i = spawnCoin; i > 0; --i){
 						tmpPos = 1.0f;
