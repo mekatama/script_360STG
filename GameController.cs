@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
 	public float editEnemySpawn;//spawn時間変更制御用数値
 	public bool isBossGo;		//boss出現flag
 	public int bossType;		//bossの種類数
+//	public bool isBossDead;		//bossの撃破flag
 	private bool isBossOnce;	//一回だけ処理
 	
 	//ゲームステート
