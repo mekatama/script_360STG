@@ -33,7 +33,7 @@ public class EnemySpawn : MonoBehaviour {
 		if((gc.killEnemyNum % 15) == 0){
 			if(isSpawnTime == false){
 				if(timeOut > 0.1f){
-					Debug.Log("enemy fueru");
+//					Debug.Log("enemy fueru");
 					timeOut -= gc.editEnemySpawn;
 					isSpawnTime = true;
 				}
@@ -42,7 +42,7 @@ public class EnemySpawn : MonoBehaviour {
 			isSpawnTime = false;
 		}
 
-		Debug.Log("isBossGo : " + gc.isBossGo);
+//		Debug.Log("isBossGo : " + gc.isBossGo);
 		//isBossGoでenemyとbossを制御
 		if(!gc.isBossGo){
 			//enemy出現
@@ -100,7 +100,7 @@ public class EnemySpawn : MonoBehaviour {
 	}
 
 	public void BossGo(){
-		Debug.Log("Go!!");
+//		Debug.Log("Go!!");
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
 		bossType = gc.bossType;				//GameControllerで決定した値を使用
