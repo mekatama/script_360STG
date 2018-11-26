@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
 	public int shotLevel;		//shotのレベル
+	public float rappedTimeOut;	//player弾の連射間隔
 	public float editEnemySpawn;//spawn時間変更制御用数値
 	public bool isBossGo;		//boss出現flag
 	public int bossType;		//bossの種類数
@@ -94,5 +95,30 @@ public class GameController : MonoBehaviour {
 	}
 	void GameOver(){
 		state = State.GameOver;
+	}
+
+	//item用のbutton制御関数
+	public void ButtonOn_Item1(){
+		switch(shotLevel){
+			case 1:
+				if(total_ItemNum >= 5){
+					shotLevel ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("shotLevel : " + shotLevel);
+				}
+				break;
+		}
+	}
+	//item用のbutton制御関数
+	public void ButtonOn_Item2(){
+		switch(attackPower){
+			case 1:
+				if(total_ItemNum >= 5){
+					attackPower ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("attackPower : " + attackPower);
+				}
+				break;
+		}
 	}
 }
