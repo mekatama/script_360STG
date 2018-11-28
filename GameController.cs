@@ -13,11 +13,11 @@ public class GameController : MonoBehaviour {
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
 	public int shotLevel;		//shotのレベル
-	public float rappedTimeOut;	//player弾の連射間隔
+	public int rappedLevel;	//player弾の連射間隔レベル
 	public float editEnemySpawn;//spawn時間変更制御用数値
 	public bool isBossGo;		//boss出現flag
 	public int bossType;		//bossの種類数
-//	public bool isBossDead;		//bossの撃破flag
+	public bool isShild;		//shildのflag
 	private bool isBossOnce;	//一回だけ処理
 	
 	//ゲームステート
@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		isGameOver = false;	//初期化
 		isBossOnce = false;	//初期化
+		isShild = false;	//初期化
 		GameStart();		//初期ステート		
 	}
 
@@ -97,7 +98,7 @@ public class GameController : MonoBehaviour {
 		state = State.GameOver;
 	}
 
-	//item用のbutton制御関数
+	//item用のbutton1制御関数
 	public void ButtonOn_Item1(){
 		switch(shotLevel){
 			case 1:
@@ -109,8 +110,32 @@ public class GameController : MonoBehaviour {
 				break;
 		}
 	}
-	//item用のbutton制御関数
+	//item用のbutton2制御関数
 	public void ButtonOn_Item2(){
+		switch(attackPower){
+			case 1:
+				if(total_ItemNum >= 5){
+					attackPower ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("attackPower : " + attackPower);
+				}
+				break;
+		}
+	}
+	//item用のbutton3制御関数
+	public void ButtonOn_Item3(){
+		switch(rappedLevel){
+			case 1:
+				if(total_ItemNum >= 5){
+					rappedLevel ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("rappedLevel : " + rappedLevel);
+				}
+				break;
+		}
+	}
+	//item用のbutton4制御関数
+	public void ButtonOn_Item4(){
 		switch(attackPower){
 			case 1:
 				if(total_ItemNum >= 5){
