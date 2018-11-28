@@ -7,6 +7,7 @@ public class Player_Shot : MonoBehaviour {
 	public GameObject bulletObject = null;			//弾プレハブ
 	public Transform bulletStartPosition = null;	//弾の発射位置を取得する
 	private float timeElapsed = 0.0f;				//弾の連射間隔カウント用
+	public float timeOut;							//連射間隔の時間
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -36,9 +37,18 @@ public class Player_Shot : MonoBehaviour {
 	void Shot(){
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
+		//連射速度の判定
+		switch(gc.rappedLevel){
+			case 1:
+				timeOut = 0.4f;
+				break;
+			case 2:
+				timeOut = 0.3f;
+				break;
+		}
 		//弾の自動連射
 		timeElapsed += Time.deltaTime;
-		if(timeElapsed >= gc.rappedTimeOut) {
+		if(timeElapsed >= timeOut) {
 			//弾を生成する位置を指定する
 			Vector3 vecBulletPos	= bulletStartPosition.position;
 			//弾を生成する
