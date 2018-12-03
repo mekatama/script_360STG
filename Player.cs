@@ -36,6 +36,11 @@ public class Player : MonoBehaviour {
 				gc.isGameOver = true;
 				Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 			}
+//test
+				if(gc.shildLevel >= 2){
+					gc.shildLevel --;
+					Debug.Log("shildLevel : " + gc.shildLevel);
+				}
 		}
 	}
  }
