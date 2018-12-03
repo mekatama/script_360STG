@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 	public float editEnemySpawn;//spawn時間変更制御用数値
 	public bool isBossGo;		//boss出現flag
 	public int bossType;		//bossの種類数
-	public bool isShild;		//shildのflag
+	public int shildLevel;		//shildのlevel
 	private bool isBossOnce;	//一回だけ処理
 	
 	//ゲームステート
@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		isGameOver = false;	//初期化
 		isBossOnce = false;	//初期化
-		isShild = false;	//初期化
 		GameStart();		//初期ステート		
 	}
 
@@ -136,12 +135,26 @@ public class GameController : MonoBehaviour {
 	}
 	//item用のbutton4制御関数
 	public void ButtonOn_Item4(){
-		switch(attackPower){
+		switch(shildLevel){
 			case 1:
 				if(total_ItemNum >= 5){
-					attackPower ++;
+					shildLevel ++;
 					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("attackPower : " + attackPower);
+					Debug.Log("shildLevel : " + shildLevel);
+				}
+				break;
+			case 2:
+				if(total_ItemNum >= 5){
+					shildLevel ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("shildLevel : " + shildLevel);
+				}
+				break;
+			case 3:
+				if(total_ItemNum >= 5){
+					shildLevel ++;
+					total_ItemNum = total_ItemNum - 5;
+					Debug.Log("shildLevel : " + shildLevel);
 				}
 				break;
 		}
