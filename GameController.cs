@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour {
 	public bool isGameOver;		//無敵flag
 	public int enemyType;		//enemyの種類数
 	public int shotLevel;		//shotのレベル
-	public int rappedLevel;	//player弾の連射間隔レベル
+	public bool isShildBom;		//shildBom発動flag
+	public int rappedLevel;		//player弾の連射間隔レベル
 	public float editEnemySpawn;//spawn時間変更制御用数値
 	public bool isBossGo;		//boss出現flag
 	public int bossType;		//bossの種類数
