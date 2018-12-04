@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,6 +56,8 @@ public class Boss1 : MonoBehaviour {
 
 	//Boss攻撃
 	void BossShot(){
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
 		//boss弾の自動連射
 		timeElapsedAttack += Time.deltaTime;
         if(timeElapsedAttack >= timeOut) {
@@ -91,6 +93,7 @@ public class Boss1 : MonoBehaviour {
 			Instantiate( bulletObject, vecBulletPos, transform.rotation);
 			timeElapsedAttack = 0.0f;
 //			Debug.Log("boss attack");
+			gc.isShildBom = false;		//ShildBom flag初期化
 		}
 	}
 

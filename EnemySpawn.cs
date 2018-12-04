@@ -97,6 +97,7 @@ public class EnemySpawn : MonoBehaviour {
 		);
 		gc.spawnEnemyNum += 1;		//spawn数を加算
 		timeElapsed = 0.0f;			//生成時間リセット
+		gc.isShildBom = false;		//ShildBom flag初期化
 	}
 
 	public void BossGo(){
