@@ -38,7 +38,8 @@ public class Player : MonoBehaviour {
 			}
 //test
 				if(gc.shildLevel >= 2){
-					gc.shildLevel --;
+					gc.shildLevel --;		//shild削る
+					gc.isShildBom = true;	//shildBom発動
 					Debug.Log("shildLevel : " + gc.shildLevel);
 				}
 		}
