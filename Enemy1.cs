@@ -44,6 +44,15 @@ public class Enemy1 : MonoBehaviour {
 				isHitStop = false;
 			}
 		}
+
+		//gcって仮の変数にGameControllerのコンポーネントを入れる
+		GameController gc = gameController.GetComponent<GameController>();
+		//特殊処理
+		if(gc.isShildBom == true){
+			Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
+			//爆発effect
+			Instantiate (particle, transform.position, transform.rotation);
+		}
 	}
 
 	//他のオブジェクトとの当たり判定
