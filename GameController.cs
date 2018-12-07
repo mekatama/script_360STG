@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour {
 	public int bossType;		//bossの種類数
 	public int shildLevel;		//shildのlevel
 	private bool isBossOnce;	//一回だけ処理
+	public bool isWayButton;	//powerupボタン制御用
+	public int[] shotLevelItemNum;	//shotLevelのpowerupに必要な数
 	
 	//ゲームステート
 	enum State{
@@ -80,6 +82,26 @@ public class GameController : MonoBehaviour {
 			isBossOnce = false;
 			enemyType = Random.Range(0,2);
 		}
+
+		//powerupアイコン制御用
+		switch(shotLevel){
+			case 1:
+				if(total_ItemNum < shotLevelItemNum[0]){
+					isWayButton = false;	//使用不可
+				}
+				if(total_ItemNum >= shotLevelItemNum[0]){
+					isWayButton = true;	//使用可	
+				}
+				break;
+			case 2:
+				if(total_ItemNum < shotLevelItemNum[1]){
+					isWayButton = false;	//使用不可
+				}
+				if(total_ItemNum >= shotLevelItemNum[1]){
+					isWayButton = true;	//使用可	
+				}
+				break;
+		}
 	}
 
 	void GameStart(){
@@ -100,16 +122,31 @@ public class GameController : MonoBehaviour {
 
 	//item用のbutton1制御関数
 	public void ButtonOn_Item1(){
-		switch(shotLevel){
+//		if(shotLevel == 1){
+//			if(total_ItemNum < 5){
+//				isNoWayIcon = true;	//使用不可
+//			}
+//		}
+
+		if(isWayButton == true){
+			shotLevel ++;
+			Debug.Log("shotLevel : " + shotLevel);
+//			total_ItemNum = total_ItemNum - shotLevelItemNum[0];
+		}
+/*		switch(shotLevel){
 			case 1:
-				if(total_ItemNum >= 5){
+				if(total_ItemNum < shotLevelItemNum[0]){
+					isNoWayIcon = true;	//使用不可
+				}
+				if(total_ItemNum >= shotLevelItemNum[0]){
 					shotLevel ++;
-					total_ItemNum = total_ItemNum - 5;
+					total_ItemNum = total_ItemNum - shotLevelItemNum[0];
+					isNoWayIcon = false;	//使用可	
 					Debug.Log("shotLevel : " + shotLevel);
 				}
 				break;
 		}
-	}
+*/	}
 	//item用のbutton2制御関数
 	public void ButtonOn_Item2(){
 		switch(attackPower){
