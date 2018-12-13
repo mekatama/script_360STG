@@ -20,8 +20,14 @@ public class GameController : MonoBehaviour {
 	public int bossType;		//bossの種類数
 	public int shildLevel;		//shildのlevel
 	private bool isBossOnce;	//一回だけ処理
-	public bool isWayButton;	//powerupボタン制御用
+	public bool isWayButton;	//powerupボタンway制御用
 	public int[] shotLevelItemNum;	//shotLevelのpowerupに必要な数
+	public bool isAtkButton;		//powerupボタンatk制御用
+	public int[] atkLevelItemNum;	//atkLevelのpowerupに必要な数
+	public bool isRappedButton;		//powerupボタンrapped制御用
+	public int[] rappedLevelItemNum;//rappedLevelのpowerupに必要な数
+	public bool isShildButton;		//powerupボタンshild制御用
+	public int[] shildLevelItemNum;//shildLevelのpowerupに必要な数
 	
 	//ゲームステート
 	enum State{
@@ -86,20 +92,57 @@ public class GameController : MonoBehaviour {
 		//powerupアイコン制御用
 		switch(shotLevel){
 			case 1:
-				if(total_ItemNum < shotLevelItemNum[0]){
-					isWayButton = false;	//使用不可
-				}
-				if(total_ItemNum >= shotLevelItemNum[0]){
-					isWayButton = true;	//使用可	
-				}
+				if(total_ItemNum < shotLevelItemNum[0])		isWayButton = false;	//使用不可
+				if(total_ItemNum >= shotLevelItemNum[0])	isWayButton = true;		//使用可	
 				break;
 			case 2:
-				if(total_ItemNum < shotLevelItemNum[1]){
-					isWayButton = false;	//使用不可
-				}
-				if(total_ItemNum >= shotLevelItemNum[1]){
-					isWayButton = true;	//使用可	
-				}
+				if(total_ItemNum < shotLevelItemNum[1])		isWayButton = false;	//使用不可
+				if(total_ItemNum >= shotLevelItemNum[1])	isWayButton = true;		//使用可	
+				break;
+			case 3:
+				isWayButton = false;	//Max
+				break;
+		}
+
+		switch(attackPower){
+			case 1:
+				if(total_ItemNum < atkLevelItemNum[0])	isAtkButton = false;	//使用不可
+				if(total_ItemNum >= atkLevelItemNum[0])	isAtkButton = true;		//使用可	
+				break;
+			case 2:
+				if(total_ItemNum < atkLevelItemNum[1])	isAtkButton = false;	//使用不可
+				if(total_ItemNum >= atkLevelItemNum[1])	isAtkButton = true;		//使用可	
+				break;
+			case 3:
+				isAtkButton = false;	//Max
+				break;
+		}
+
+		switch(rappedLevel){
+			case 1:
+				if(total_ItemNum < rappedLevelItemNum[0])	isRappedButton = false;	//使用不可
+				if(total_ItemNum >= rappedLevelItemNum[0])	isRappedButton = true;	//使用可	
+				break;
+			case 2:
+				if(total_ItemNum < rappedLevelItemNum[1])	isRappedButton = false;	//使用不可
+				if(total_ItemNum >= rappedLevelItemNum[1])	isRappedButton = true;	//使用可	
+				break;
+			case 3:
+				isRappedButton = false;	//Max
+				break;
+		}
+
+		switch(shildLevel){
+			case 1:
+				if(total_ItemNum < shildLevelItemNum[0])	isShildButton = false;	//使用不可
+				if(total_ItemNum >= shildLevelItemNum[0])	isShildButton = true;		//使用可	
+				break;
+			case 2:
+				if(total_ItemNum < shildLevelItemNum[1])	isShildButton = false;	//使用不可
+				if(total_ItemNum >= shildLevelItemNum[1])	isShildButton = true;		//使用可	
+				break;
+			case 3:
+				isShildButton = false;	//Max
 				break;
 		}
 	}
@@ -122,79 +165,31 @@ public class GameController : MonoBehaviour {
 
 	//item用のbutton1制御関数
 	public void ButtonOn_Item1(){
-//		if(shotLevel == 1){
-//			if(total_ItemNum < 5){
-//				isNoWayIcon = true;	//使用不可
-//			}
-//		}
-
 		if(isWayButton == true){
 			shotLevel ++;
 			Debug.Log("shotLevel : " + shotLevel);
-//			total_ItemNum = total_ItemNum - shotLevelItemNum[0];
 		}
-/*		switch(shotLevel){
-			case 1:
-				if(total_ItemNum < shotLevelItemNum[0]){
-					isNoWayIcon = true;	//使用不可
-				}
-				if(total_ItemNum >= shotLevelItemNum[0]){
-					shotLevel ++;
-					total_ItemNum = total_ItemNum - shotLevelItemNum[0];
-					isNoWayIcon = false;	//使用可	
-					Debug.Log("shotLevel : " + shotLevel);
-				}
-				break;
-		}
-*/	}
+	}
+
 	//item用のbutton2制御関数
 	public void ButtonOn_Item2(){
-		switch(attackPower){
-			case 1:
-				if(total_ItemNum >= 5){
-					attackPower ++;
-					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("attackPower : " + attackPower);
-				}
-				break;
+		if(isAtkButton == true){
+			attackPower ++;
+			Debug.Log("attackPower : " + attackPower);
 		}
 	}
 	//item用のbutton3制御関数
 	public void ButtonOn_Item3(){
-		switch(rappedLevel){
-			case 1:
-				if(total_ItemNum >= 5){
-					rappedLevel ++;
-					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("rappedLevel : " + rappedLevel);
-				}
-				break;
+		if(isRappedButton == true){
+			rappedLevel ++;
+			Debug.Log("rappedLevel : " + rappedLevel);
 		}
 	}
 	//item用のbutton4制御関数
 	public void ButtonOn_Item4(){
-		switch(shildLevel){
-			case 1:
-				if(total_ItemNum >= 5){
-					shildLevel ++;
-					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("shildLevel : " + shildLevel);
-				}
-				break;
-			case 2:
-				if(total_ItemNum >= 5){
-					shildLevel ++;
-					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("shildLevel : " + shildLevel);
-				}
-				break;
-			case 3:
-				if(total_ItemNum >= 5){
-					shildLevel ++;
-					total_ItemNum = total_ItemNum - 5;
-					Debug.Log("shildLevel : " + shildLevel);
-				}
-				break;
+		if(isShildButton == true){
+			shildLevel ++;
+			Debug.Log("shildLevel : " + shildLevel);
 		}
 	}
 }
