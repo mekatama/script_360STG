@@ -107,7 +107,7 @@ public class Boss1 : MonoBehaviour {
 				isHitStop = true;					//on
 			}
 			//死亡判定
-			if(bossHp == 0){
+			if(bossHp <= 0){
 				if(isDeth == false){
 					//スコア加算
 					gc.isBossGo = false;
