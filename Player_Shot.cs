@@ -11,6 +11,7 @@ public class Player_Shot : MonoBehaviour {
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
+		this.transform.localScale = new Vector3(0, 0, 0);	//初期は非表示
 	}
 
 	void Update () {
@@ -19,17 +20,26 @@ public class Player_Shot : MonoBehaviour {
 		if(gc.shotLevel == 1){
 			//アタッチしたオブジェクト名で分岐
 			if(this.gameObject.name == "ShotPoint1"){
+				this.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);	//表示
 				Shot();
 			}
 		}else if(gc.shotLevel == 2){
 			//アタッチしたオブジェクト名で分岐
 			if(this.gameObject.name == "ShotPoint2" || this.gameObject.name == "ShotPoint3"){
+				this.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);	//表示
 				Shot();
+			}
+			if(this.gameObject.name == "ShotPoint1"){
+				this.transform.localScale = new Vector3(0, 0, 0);	//非表示
 			}
 		}else if(gc.shotLevel == 3){
 			//アタッチしたオブジェクト名で分岐
 			if(this.gameObject.name == "ShotPoint4" || this.gameObject.name == "ShotPoint5" || this.gameObject.name == "ShotPoint1"){
+				this.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);	//表示
 				Shot();
+			}
+			if(this.gameObject.name == "ShotPoint2" || this.gameObject.name == "ShotPoint3"){
+				this.transform.localScale = new Vector3(0, 0, 0);	//非表示
 			}
 		}
 	}
@@ -44,6 +54,9 @@ public class Player_Shot : MonoBehaviour {
 				break;
 			case 2:
 				timeOut = 0.3f;
+				break;
+			case 3:
+				timeOut = 0.2f;
 				break;
 		}
 		//弾の自動連射
