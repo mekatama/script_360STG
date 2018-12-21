@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour {
 			}
 		}else{
 			isBossOnce = false;
-			enemyType = Random.Range(0,2);
+			enemyType = Random.Range(0,3);	//enemyの種類を増やしたら変更する
 		}
 
 		//powerupアイコン制御用
