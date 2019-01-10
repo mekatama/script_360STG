@@ -19,6 +19,7 @@ public class Boss1 : MonoBehaviour {
 	private float z_pos;				//point出現位置random
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
+	public GameObject enemyScoreImg;	//score画像
 
 	public GameObject bulletObject = null;	//boss弾プレハブ
 	public float timeOut = 0.4f;			//boss弾の連射間隔
@@ -123,6 +124,11 @@ public class Boss1 : MonoBehaviour {
 										new Vector3(transform.position.x + x_pos, transform.position.y, transform.position.z + z_pos),
 										transform.rotation);
 					}
+					//Score表示
+					Instantiate (	enemyScoreImg,
+									new Vector3(transform.position.x, transform.position.y + 2, transform.position.z),
+									Camera.main.transform.rotation
+								);
 					//アイテムを落とす
 					for(int i = spawnCoin; i > 0; --i){
 						tmpPos = 1.0f;

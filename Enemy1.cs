@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy1 : MonoBehaviour {
 	GameObject gameController;			//検索したオブジェクト入れる用
@@ -19,6 +20,7 @@ public class Enemy1 : MonoBehaviour {
 	private float z_pos;				//point出現位置random
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
+	public GameObject enemyScoreImg;	//score画像
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -76,6 +78,11 @@ public class Enemy1 : MonoBehaviour {
 					gc.killEnemyNum ++;	//enemy撃破数
 					//爆発effect
 					Instantiate (particle, transform.position, transform.rotation);
+					//Score表示
+					Instantiate (	enemyScoreImg,
+									new Vector3(transform.position.x, transform.position.y + 2, transform.position.z),
+									Camera.main.transform.rotation
+								);
 
 					//アイテムを落とす
 					for(int i = spawnCoin; i > 0; --i){
