@@ -10,6 +10,7 @@ public class Item1 : MonoBehaviour {
 	private bool isStop;
 	public float stopTime = 0.2f;		//stop間隔
 	private float timeElapsed = 0.0f;	//Stopカウント用
+	public AudioClip audioClipGet;		//Item Get SE
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
@@ -41,6 +42,8 @@ public class Item1 : MonoBehaviour {
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
 		if(other.tag == "Player"){
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipGet, transform.position);	//SE再生(Destroy対策用)
 			gc.total_ItemNum += 1;	//個数加算
 			Destroy( gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 		}

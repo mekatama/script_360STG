@@ -21,9 +21,12 @@ public class Enemy1 : MonoBehaviour {
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
 	public GameObject enemyScoreImg;	//score画像
+	AudioSource audioSource;			//AudioSourceコンポーネント取得用
+	public AudioClip audioClipBakuhatu;	//爆発 SE
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
+		audioSource = gameObject.GetComponent<AudioSource>();		//AudioSourceコンポーネント取得
 		targetPos = GameObject.FindWithTag ("Target");				//
 		isHitStop = false;
 		isDeth = false;
@@ -72,6 +75,8 @@ public class Enemy1 : MonoBehaviour {
 			//死亡判定
 			if(enemyHp == 0){
 				if(isDeth == false){
+					//SEをその場で鳴らす
+					AudioSource.PlayClipAtPoint( audioClipBakuhatu, transform.position);	//SE再生(Destroy対策用)
 					//スコア加算
 					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 					gc.total_Score += enemy_score;
@@ -83,7 +88,6 @@ public class Enemy1 : MonoBehaviour {
 									new Vector3(transform.position.x, transform.position.y + 2, transform.position.z),
 									Camera.main.transform.rotation
 								);
-
 					//アイテムを落とす
 					for(int i = spawnCoin; i > 0; --i){
 						tmpPos = 1.0f;

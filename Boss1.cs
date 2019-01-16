@@ -20,6 +20,7 @@ public class Boss1 : MonoBehaviour {
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
 	public GameObject enemyScoreImg;	//score画像
+	public AudioClip audioClipBakuhatu;	//爆発 SE
 
 	public GameObject bulletObject = null;	//boss弾プレハブ
 	public float timeOut = 0.4f;			//boss弾の連射間隔
@@ -110,6 +111,8 @@ public class Boss1 : MonoBehaviour {
 			//死亡判定
 			if(bossHp <= 0){
 				if(isDeth == false){
+					//SEをその場で鳴らす
+					AudioSource.PlayClipAtPoint( audioClipBakuhatu, transform.position);	//SE再生(Destroy対策用)
 					//スコア加算
 					gc.isBossGo = false;
 					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
