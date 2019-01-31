@@ -6,6 +6,7 @@ public class Bullet_P : MonoBehaviour {
 	public float bulletMoveSpeed = 10.0f;	//1秒間に弾が進む距離
 	public GameObject explosion;			//爆発プレハブを入れる用
 	public GameObject explosionEnemy;		//爆発プレハブを入れる用
+	public AudioClip audioClipGuard;		//Guard SE
 
 	void Start () {
 		
@@ -30,6 +31,8 @@ public class Bullet_P : MonoBehaviour {
 		if(other.tag == "Shild_Enemy"){
 			Destroy( gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
 			Instantiate (explosionEnemy, transform.position, transform.rotation);
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipGuard, transform.position);	//SE再生(Destroy対策用)
 		}
 	}
 }
