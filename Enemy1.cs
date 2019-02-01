@@ -21,12 +21,10 @@ public class Enemy1 : MonoBehaviour {
 	private float tmpPos;				//random値
 	public int spawnCoin;				//coin出現数
 	public GameObject enemyScoreImg;	//score画像
-	AudioSource audioSource;			//AudioSourceコンポーネント取得用
 	public AudioClip audioClipBakuhatu;	//爆発 SE
 
 	void Start () {
 		gameController = GameObject.FindWithTag ("GameController");	//GameControllerオブジェクトを探す
-		audioSource = gameObject.GetComponent<AudioSource>();		//AudioSourceコンポーネント取得
 		targetPos = GameObject.FindWithTag ("Target");				//
 		isHitStop = false;
 		isDeth = false;
