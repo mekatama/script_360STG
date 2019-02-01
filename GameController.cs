@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	public int total_Score;		//score
@@ -27,7 +28,18 @@ public class GameController : MonoBehaviour {
 	public bool isRappedButton;		//powerupボタンrapped制御用
 	public int[] rappedLevelItemNum;//rappedLevelのpowerupに必要な数
 	public bool isShildButton;		//powerupボタンshild制御用
-	public int[] shildLevelItemNum;//shildLevelのpowerupに必要な数
+	public int[] shildLevelItemNum;	//shildLevelのpowerupに必要な数
+	public AudioClip audioClipPowerup;	//Powerup SE
+
+	public Text wayLevelUpText;			//Textコンポーネント取得用
+	public Text attackLevelUpText;		//Textコンポーネント取得用
+	public Text rappedLevelUpText;		//Textコンポーネント取得用
+	public Text shildLevelUpText;		//Textコンポーネント取得用
+	float PowerUpUITime = 3.0f;			//UIのPowerUpUIを表示する時間
+	float time_PowerUp1 = 0f;			//UIのSTARTを表示する時間用の変数
+	float time_PowerUp2 = 0f;			//UIのSTARTを表示する時間用の変数
+	float time_PowerUp3 = 0f;			//UIのSTARTを表示する時間用の変数
+	float time_PowerUp4 = 0f;			//UIのSTARTを表示する時間用の変数
 	
 	//ゲームステート
 	enum State{
@@ -40,6 +52,14 @@ public class GameController : MonoBehaviour {
 	State state;
 
 	void Start () {
+		wayLevelUpText.enabled = false;		//UI非表示
+		attackLevelUpText.enabled = false;	//UI非表示
+		rappedLevelUpText.enabled = false;	//UI非表示
+		shildLevelUpText.enabled = false;	//UI非表示
+		time_PowerUp1 = 0f;					//UIを表示する時間用の変数の初期化
+		time_PowerUp2 = 0f;					//UIを表示する時間用の変数の初期化
+		time_PowerUp3 = 0f;					//UIを表示する時間用の変数の初期化
+		time_PowerUp4 = 0f;					//UIを表示する時間用の変数の初期化
 		isGameOver = false;	//初期化
 		isBossOnce = false;	//初期化
 		GameStart();		//初期ステート		
@@ -54,6 +74,36 @@ public class GameController : MonoBehaviour {
 				break;
 			//
 			case State.Play:
+				//PowerUpのUI表示制御
+				if(wayLevelUpText.enabled == true){
+					time_PowerUp1 += Time.deltaTime;
+					if(time_PowerUp1 > PowerUpUITime){
+						wayLevelUpText.enabled = false;		//UI非表示
+						time_PowerUp1 = 0f;					//初期化
+					}
+				}
+				if(attackLevelUpText.enabled == true){
+					time_PowerUp2 += Time.deltaTime;
+					if(time_PowerUp2 > PowerUpUITime){
+						attackLevelUpText.enabled = false;		//UI非表示
+						time_PowerUp2 = 0f;					//初期化
+					}
+				}
+				if(rappedLevelUpText.enabled == true){
+					time_PowerUp3 += Time.deltaTime;
+					if(time_PowerUp3 > PowerUpUITime){
+						rappedLevelUpText.enabled = false;		//UI非表示
+						time_PowerUp3 = 0f;					//初期化
+					}
+				}
+				if(shildLevelUpText.enabled == true){
+					time_PowerUp4 += Time.deltaTime;
+					if(time_PowerUp4 > PowerUpUITime){
+						shildLevelUpText.enabled = false;		//UI非表示
+						time_PowerUp4 = 0f;					//初期化
+					}
+				}
+
 //				Debug.Log("play");
 				//GameOver判定
 				if(isGameOver){
@@ -166,30 +216,42 @@ public class GameController : MonoBehaviour {
 	//item用のbutton1制御関数
 	public void ButtonOn_Item1(){
 		if(isWayButton == true){
+			wayLevelUpText.enabled = true;	//UI表示
 			shotLevel ++;
 			Debug.Log("shotLevel : " + shotLevel);
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
 	}
 
 	//item用のbutton2制御関数
 	public void ButtonOn_Item2(){
 		if(isAtkButton == true){
+			attackLevelUpText.enabled = true;	//UI表示
 			attackPower ++;
 			Debug.Log("attackPower : " + attackPower);
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
 	}
 	//item用のbutton3制御関数
 	public void ButtonOn_Item3(){
 		if(isRappedButton == true){
+			rappedLevelUpText.enabled = true;	//UI表示
 			rappedLevel ++;
 			Debug.Log("rappedLevel : " + rappedLevel);
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
 	}
 	//item用のbutton4制御関数
 	public void ButtonOn_Item4(){
 		if(isShildButton == true){
+			shildLevelUpText.enabled = true;	//UI表示
 			shildLevel ++;
 			Debug.Log("shildLevel : " + shildLevel);
+			//SEをその場で鳴らす
+			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
 	}
 }
