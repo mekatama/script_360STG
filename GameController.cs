@@ -40,6 +40,8 @@ public class GameController : MonoBehaviour {
 	float time_PowerUp2 = 0f;			//UIのSTARTを表示する時間用の変数
 	float time_PowerUp3 = 0f;			//UIのSTARTを表示する時間用の変数
 	float time_PowerUp4 = 0f;			//UIのSTARTを表示する時間用の変数
+	public Text bossSpawnText;			//Textコンポーネント取得用
+	float time_bossSpawn = 0f;			//UIのSTARTを表示する時間用の変数
 	
 	//ゲームステート
 	enum State{
@@ -60,6 +62,8 @@ public class GameController : MonoBehaviour {
 		time_PowerUp2 = 0f;					//UIを表示する時間用の変数の初期化
 		time_PowerUp3 = 0f;					//UIを表示する時間用の変数の初期化
 		time_PowerUp4 = 0f;					//UIを表示する時間用の変数の初期化
+		bossSpawnText.enabled = false;		//UI非表示
+		time_bossSpawn = 0f;				//UIを表示する時間用の変数の初期化
 		isGameOver = false;	//初期化
 		isBossOnce = false;	//初期化
 		GameStart();		//初期ステート		
@@ -74,6 +78,14 @@ public class GameController : MonoBehaviour {
 				break;
 			//
 			case State.Play:
+				//BossSpawnのUI表示制御
+				if(bossSpawnText.enabled == true){
+					time_bossSpawn += Time.deltaTime;
+					if(time_bossSpawn > PowerUpUITime){
+						bossSpawnText.enabled = false;		//UI非表示
+						time_bossSpawn = 0f;				//初期化
+					}
+				}
 				//PowerUpのUI表示制御
 				if(wayLevelUpText.enabled == true){
 					time_PowerUp1 += Time.deltaTime;
@@ -132,6 +144,7 @@ public class GameController : MonoBehaviour {
 			if(!isBossOnce){
 				isBossGo = true;	//bosss出現。撃破でoff
 				bossType = Random.Range(0,1);
+				bossSpawnText.enabled = true;	//UI表示判定用
 				isBossOnce = true;
 			}
 		}else{
