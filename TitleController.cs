@@ -29,8 +29,8 @@ public class TitleController : MonoBehaviour {
 	}
 
 	//Debug用ハイスコアリセットボタン
-//	public void ButtonClicked_Reset(){
-//		PlayerPrefs.DeleteAll();
-//		Debug.Log("全データ削除しますた");	
-//	}
+	public void ButtonClicked_Reset(){
+		PlayerPrefs.DeleteAll();
+		Debug.Log("全データ削除しますた");	
+	}
 }
