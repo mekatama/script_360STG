@@ -29,6 +29,9 @@ public class EnemySpawn : MonoBehaviour {
 	void Update () {
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
+		timeOut = gc.editEnemySpawn;	//gc側で制御
+		Debug.Log("editEnemySpawn : " + timeOut);
+/*
 		//15体撃破数毎にスポーン時間を短くする
 		if((gc.killEnemyNum % 15) == 0){
 			if(isSpawnTime == false){
@@ -41,7 +44,7 @@ public class EnemySpawn : MonoBehaviour {
 		}else{
 			isSpawnTime = false;
 		}
-
+*/
 //		Debug.Log("isBossGo : " + gc.isBossGo);
 		//isBossGoでenemyとbossを制御
 		if(!gc.isBossGo){
@@ -50,7 +53,9 @@ public class EnemySpawn : MonoBehaviour {
 			//時間チェック
 			timeElapsed += Time.deltaTime;	//経過時間の保存
 			if(timeElapsed >= timeOut) {	//指定した経過時間に達したら
-				EnemyGo();
+				if(!gc.isGameOver){			//gameoverじゃない
+					EnemyGo();
+				}
 			}
 		}else{
 			//Boss出現
@@ -69,23 +74,23 @@ public class EnemySpawn : MonoBehaviour {
 		//出現位置
 		switch(spawnPos){
 			case 0:
-				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
-				z_pos = 8.0f;
+				x_pos = Random.Range(-9.0f,9.0f); //ランダムで出現位置を決める
+				z_pos = 15.0f;
 //				Debug.Log("上");
 				break;
 			case 1:
-				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
-				z_pos = -8.0f;
+				x_pos = Random.Range(-9.0f,9.0f); //ランダムで出現位置を決める
+				z_pos = -15.0f;
 //				Debug.Log("下");
 				break;
 			case 2:
-				x_pos = 4.0f;
-				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				x_pos = 9.0f;
+				z_pos = Random.Range(-15.0f,15.0f); //ランダムで出現位置を決める
 //				Debug.Log("右");
 				break;
 			case 3:
-				x_pos = -4.0f;
-				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				x_pos = -9.0f;
+				z_pos = Random.Range(-15.0f,15.0f); //ランダムで出現位置を決める
 //				Debug.Log("左");
 				break;
 		}
@@ -109,23 +114,23 @@ public class EnemySpawn : MonoBehaviour {
 		//出現位置
 		switch(spawnPos){
 			case 0:
-				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
-				z_pos = 8.0f;
+				x_pos = Random.Range(-9.0f,9.0f); //ランダムで出現位置を決める
+				z_pos = 15.0f;
 //				Debug.Log("上");
 				break;
 			case 1:
-				x_pos = Random.Range(-4.0f,4.0f); //ランダムで出現位置を決める
-				z_pos = -8.0f;
+				x_pos = Random.Range(-9.0f,9.0f); //ランダムで出現位置を決める
+				z_pos = -15.0f;
 //				Debug.Log("下");
 				break;
 			case 2:
-				x_pos = 4.0f;
-				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				x_pos = 9.0f;
+				z_pos = Random.Range(-15.0f,15.0f); //ランダムで出現位置を決める
 //				Debug.Log("右");
 				break;
 			case 3:
-				x_pos = -4.0f;
-				z_pos = Random.Range(-8.0f,8.0f); //ランダムで出現位置を決める
+				x_pos = -9.0f;
+				z_pos = Random.Range(-15.0f,15.0f); //ランダムで出現位置を決める
 //				Debug.Log("左");
 				break;
 		}
