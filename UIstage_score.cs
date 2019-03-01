@@ -11,6 +11,6 @@ public class UIstage_score : MonoBehaviour {
 		//gcって仮の変数にGameControllerのコンポーネントを入れる
 		GameController gc = gameController.GetComponent<GameController>();
 		//score表示
-		scoreText.text = gc.total_Score.ToString("000000" + "p");
+		scoreText.text = "Score : " + gc.total_Score.ToString("000000" + "p");
 	}
 }
