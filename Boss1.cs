@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -113,9 +113,10 @@ public class Boss1 : MonoBehaviour {
 				if(isDeth == false){
 					//SEをその場で鳴らす
 					AudioSource.PlayClipAtPoint( audioClipBakuhatu, transform.position);	//SE再生(Destroy対策用)
-					//スコア加算
 					gc.isBossGo = false;
+					gc.isEnemyGo = true;
 					Destroy(gameObject);	//このGameObjectを［Hierrchy］ビューから削除する
+					//スコア加算
 					gc.total_Score += boss_score;
 					gc.killBossNum += 1;	//enemy撃破数
 					//爆発effect

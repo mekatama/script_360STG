@@ -19,7 +19,10 @@ public class GameController : MonoBehaviour {
 	public bool isShildBom;		//shildBom発動flag
 	public int rappedLevel;		//player弾の連射間隔レベル
 	public float editEnemySpawn;//spawn時間変更制御用数値
+	public bool isEnemyGo;		//enemy出現flag
+	private bool isEnemyStop;	//enemy出現flag
 	public bool isBossGo;		//boss出現flag
+	private bool isBossGoOnce;	//boss出現flag
 	public bool isBossGo20;		//boss出現flag 20体毎
 	public int bossType;		//bossの種類数
 	public int shildLevel;		//shildのlevel
@@ -71,6 +74,7 @@ public class GameController : MonoBehaviour {
 		time_bossSpawn = 0f;				//UIを表示する時間用の変数の初期化
 		isGameOver = false;	//初期化
 		isBossOnce = false;	//初期化
+		isEnemyGo = true;	//初期化
 		//HighScoreがなかったら０を入れて初期化
 		high_Score = PlayerPrefs.GetInt("HighScore", 0); 
 		//NewRecord flag用 0 = false
@@ -149,49 +153,85 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if(!isGameOver){
+			//enemy出現停止判定
+			if(spawnEnemyNum == 40 || spawnEnemyNum == 70 || spawnEnemyNum == 90){
+				if(isEnemyStop == false){
+					isBossGoOnce = true;	//Boss一回だけ処理
+					isEnemyGo = false;		//enemy出現停止
+					isEnemyStop = true;		//enemy一回だけ処理
+				}
+			//後半のbossloop出現判定判定
+			}else if(spawnEnemyNum > 90 && isBossGo20 == true){
+				if(isEnemyStop == false){
+					isBossGoOnce = true;	//Boss一回だけ処理
+					isEnemyGo = false;		//enemy出現停止
+					isEnemyStop = true;		//enemy一回だけ処理
+				}
+			}else{
+				isEnemyStop = false;		//enemy一回だけ処理
+				isEnemyGo = true;			//enemy出現
+			}
+
+			//boss出現判定
+			if(killEnemyNum == 40 || killEnemyNum == 70 || killEnemyNum == 90){
+				if(isBossGoOnce == true){
+					isBossGo = true;		//boss出現
+					isBossGoOnce = false;	//Boss一回だけ処理
+				}
+			}
+			//後半のbossloop出現判定判定
+			if(killEnemyNum > 90 && isBossGo20 == true){
+				if(isBossGoOnce == true){
+					isBossGo = true;		//boss出現
+					isBossGoOnce = false;	//Boss一回だけ処理
+				}
+			}
+
+
+			//後半のboss出現制御
 			if((spawnEnemyNum % 20) == 0){
 				isBossGo20 = true;
 			}else{
 				isBossGo20 = false;
 			}
 
-			//spawn数でbossの出現と種類を制御。しきい値は後で制御
-//bossの出現パターンの設定
-			if(spawnEnemyNum == 40){
-				//ココに一回だけ処理
-				if(!isBossOnce){
-					isBossGo = true;				//bosss出現。撃破でoff
-					bossType = 0;					//type select
-					bossSpawnText.enabled = true;	//UI表示判定用
-					isBossOnce = true;
-				}
-			}else if(spawnEnemyNum == 70){
-				//ココに一回だけ処理
-				if(!isBossOnce){
-					isBossGo = true;				//bosss出現。撃破でoff
-					bossType = 1;					//type select
-					bossSpawnText.enabled = true;	//UI表示判定用
-					isBossOnce = true;
-				}
-			}else if(spawnEnemyNum == 90){
-				//ココに一回だけ処理
-				if(!isBossOnce){
-					isBossGo = true;				//bosss出現。撃破でoff
-					bossType = 2;					//type select
-					bossSpawnText.enabled = true;	//UI表示判定用
-					isBossOnce = true;
-				}
-			}else if(spawnEnemyNum >= 90 && isBossGo20 == true){
-				//ココに一回だけ処理
-				if(!isBossOnce){
-					isBossGo = true;				//bosss出現。撃破でoff
-					bossType = Random.Range(0,3);	//type select
-					bossSpawnText.enabled = true;	//UI表示判定用
-					isBossOnce = true;
-				}
-			}else{
+			//Boss出現処理
+			if(isBossGo == true && isEnemyGo == false){
+				if(spawnEnemyNum == 40){
+					//ココに一回だけ処理
+					if(!isBossOnce){
+						bossType = 0;					//type select
+						bossSpawnText.enabled = true;	//UI表示判定用
+						isBossOnce = true;
+					}
+				}else if(spawnEnemyNum == 70){
+					//ココに一回だけ処理
+					if(!isBossOnce){
+						bossType = 1;					//type select
+						bossSpawnText.enabled = true;	//UI表示判定用
+						isBossOnce = true;
+					}
+				}else if(spawnEnemyNum == 90){
+					//ココに一回だけ処理
+					if(!isBossOnce){
+						bossType = 2;					//type select
+						bossSpawnText.enabled = true;	//UI表示判定用
+						isBossOnce = true;
+					}
+				}else if(spawnEnemyNum >= 90 && isBossGo20 == true){
+					//ココに一回だけ処理
+					if(!isBossOnce){
+						bossType = Random.Range(0,3);	//type select
+						bossSpawnText.enabled = true;	//UI表示判定用
+						isBossOnce = true;
+					}
+				}		
+			}
+
+			//Enemy出現処理
+			if(isEnemyGo){
 				isBossOnce = false;
-//enemy出現パターンの設定
+
 				if(spawnEnemyNum < 10){
 					editEnemySpawn = 2.5f;	//enemyスポーン間隔
 					enemyType = 0;			//enemyの種類を増やしたら変更する
@@ -220,7 +260,10 @@ public class GameController : MonoBehaviour {
 					editEnemySpawn = 1.2f;	//enemyスポーン間隔
 					enemyType = Random.Range(0,3);	//enemyの種類 0 or 1 or 2
 				}
+			}else{
+				//
 			}
+
 		}
 		//powerupアイコン制御用
 		switch(shotLevel){
@@ -311,7 +354,7 @@ public class GameController : MonoBehaviour {
 		if(isWayButton == true){
 			wayLevelUpText.enabled = true;	//UI表示
 			shotLevel ++;
-			Debug.Log("shotLevel : " + shotLevel);
+//			Debug.Log("shotLevel : " + shotLevel);
 			//SEをその場で鳴らす
 			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
@@ -322,7 +365,7 @@ public class GameController : MonoBehaviour {
 		if(isAtkButton == true){
 			attackLevelUpText.enabled = true;	//UI表示
 			attackPower ++;
-			Debug.Log("attackPower : " + attackPower);
+//			Debug.Log("attackPower : " + attackPower);
 			//SEをその場で鳴らす
 			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
@@ -332,7 +375,7 @@ public class GameController : MonoBehaviour {
 		if(isRappedButton == true){
 			rappedLevelUpText.enabled = true;	//UI表示
 			rappedLevel ++;
-			Debug.Log("rappedLevel : " + rappedLevel);
+//			Debug.Log("rappedLevel : " + rappedLevel);
 			//SEをその場で鳴らす
 			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
@@ -342,7 +385,7 @@ public class GameController : MonoBehaviour {
 		if(isShildButton == true){
 			shildLevelUpText.enabled = true;	//UI表示
 			shildLevel ++;
-			Debug.Log("shildLevel : " + shildLevel);
+//			Debug.Log("shildLevel : " + shildLevel);
 			//SEをその場で鳴らす
 			AudioSource.PlayClipAtPoint( audioClipPowerup, transform.position);	//SE再生(Destroy対策用)
 		}
